@@ -7,16 +7,22 @@
         {{ `Learn and improve vocabulary\n anywhere, any time.` }}
       </p>
     </div>
-    <MainButton />
+    <MainButton label="Get started" @click="onRouteToInformation" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import MainButton from "../components/MainButton/index.vue";
+import router from "@/router";
 
 export default defineComponent({
   name: "Welcome",
   components: { MainButton },
+  methods: {
+    onRouteToInformation() {
+      router.push("/information");
+    },
+  },
 });
 </script>
