@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-full gap-y-2">
-    <label class="text-sm">{{ label }}</label>
+    <label class="text-sm text-gray-400">{{ label }}</label>
     <input
       class="focus:outline-none border-b border-primary-400"
       v-model="model"
