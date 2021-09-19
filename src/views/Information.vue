@@ -24,15 +24,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { Gender } from "@/enum/gender";
 import router from "@/router";
-import MainButton from "../components/MainButton/index.vue";
+import { defineComponent } from "vue";
 import ArrowLeftButton from "../components/ArrowLeftButton/index.vue";
 import GenderSelection from "../components/GenderSelection/selector.vue";
+import MainButton from "../components/MainButton/index.vue";
 import SimpleInput from "../components/SimpleInput/index.vue";
 import SimpleSelect from "../components/SimpleSelect/index.vue";
-import { Gender } from "@/enum/gender";
 import { ISimpleSelectOption } from "../interfaces/select";
+
 export default defineComponent({
   name: "Information",
   components: {
@@ -78,8 +79,7 @@ export default defineComponent({
       this.name = data;
     },
     onRouteToHomePage() {
-      console.log(this.name);
-      console.log(this.age);
+      router.push("/home");
     },
     onSelectAge(age: number) {
       this.age = age;
