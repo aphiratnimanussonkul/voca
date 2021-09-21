@@ -9,8 +9,10 @@
 </template>
 
 <script lang="ts">
+import { Language } from "@/enum/language";
 import { defineComponent } from "vue";
 import MainButton from "../components/MainButton/index.vue";
+import TextToSpeehService from "../services/speak";
 
 export default defineComponent({
   name: "Home",
@@ -19,11 +21,14 @@ export default defineComponent({
   },
   data() {
     return {
+      textToSpeechService: new TextToSpeehService(),
       name: "Aphirat",
     };
   },
   methods: {
-    onRead() {},
+    onRead() {
+      this.textToSpeechService.speak("สวัสดี", Language.TH);
+    },
   },
 });
 </script>
