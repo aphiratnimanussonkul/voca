@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex flex-col p-6 justify-between h-screen">
     <div class="flex flex-col items-center my-auto">
-      <img src="../assets/hello.png" />
+      <img src="/assets/hello.png" />
       <h1 class="font-bold text-2xl">Voca</h1>
       <p class="text-gray-400 whitespace-pre-line text-center mt-2">
         {{ `Learn and improve vocabulary\n anywhere, any time.` }}

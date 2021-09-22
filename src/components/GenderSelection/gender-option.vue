@@ -6,7 +6,7 @@
     }`"
   >
     <img
-      :src="require(`../../assets/make-it-rain-${gender}.png`)"
+      :src="`/assets/make-it-rain-${gender}.png`"
       class="w-5/6"
     />
     <p>{{ gender }}</p>

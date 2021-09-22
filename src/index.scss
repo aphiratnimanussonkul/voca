@@ -4,13 +4,13 @@
 
 body {
   font-family: "sans-serif", "Open Sans";
-
+  background-color: "#FBFBFB";
   select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     background: transparent;
-    background-image: url("./assets/icons/arrow-down.svg");
+    background-image: url("/assets/icons/arrow-down.svg");
     background-repeat: no-repeat;
     background-position-x: 100%;
     background-position-y: 0px;
