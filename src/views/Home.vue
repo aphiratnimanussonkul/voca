@@ -8,11 +8,13 @@
       <h1 class="text-gray-600 text-sm">Recommend</h1>
       <div class="flex overflow-x-auto p-1 mt-2 gap-x-4">
         <RecommendCard
+          :onClick="onClickRecommendCard"
           bookName="The Phoenix Project"
           wordAmount="150"
           imagePath="/assets/the-phoenix-project.png"
         />
         <RecommendCard
+          :onClick="onClickRecommendCard"
           bookName="The Power of When"
           wordAmount="32"
           imagePath="/assets/the-power-of-when.png"
@@ -23,11 +25,10 @@
 </template>
 
 <script lang="ts">
-import { Language } from "@/enum/language";
 import { defineComponent } from "vue";
 import MainButton from "../components/MainButton/index.vue";
-import TextToSpeehService from "../services/speak";
 import RecommendCard from "../components/RecommendCard/index.vue";
+import router from "../router/index";
 
 export default defineComponent({
   name: "Home",
@@ -35,15 +36,9 @@ export default defineComponent({
     MainButton,
     RecommendCard,
   },
-  data() {
-    return {
-      textToSpeechService: new TextToSpeehService(),
-      name: "Aphirat",
-    };
-  },
   methods: {
-    onRead() {
-      this.textToSpeechService.speak("สวัสดี", Language.TH);
+    onClickRecommendCard() {
+      router.push("/vocab");
     },
   },
 });
