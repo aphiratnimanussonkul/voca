@@ -10,6 +10,8 @@
     "@tailwindcss/forms": "^0.3.3",
     "@types/sass": "^1.16.1",
     "core-js": "^3.6.5",
+    "firebase": "^9.1.0",
+    "firebase-tools": "^9.18.0",
     "node-sass": "^6.0.1",
     "sass-loader": "^10.2.0",
     "vue": "^3.0.0",
