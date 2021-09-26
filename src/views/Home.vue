@@ -6,18 +6,16 @@
     </div>
     <div class="mt-4 w-full ml-6">
       <h1 class="text-gray-600 text-sm">Recommend</h1>
-      <div class="flex overflow-x-auto p-1 mt-2 gap-x-4">
+      <div
+        class="flex overflow-x-auto p-1 mt-2 gap-x-4"
+        v-for="set in this.vocabularySet"
+        :key="set"
+      >
         <RecommendCard
-          :onClick="onClickRecommendCard"
-          bookName="The Phoenix Project"
-          wordAmount="150"
+          @click="onClickRecommendCard(set.id)"
+          :bookName="set.name"
+          :wordAmount="set.vocabularies.length"
           imagePath="/assets/the-phoenix-project.png"
-        />
-        <RecommendCard
-          :onClick="onClickRecommendCard"
-          bookName="The Power of When"
-          wordAmount="32"
-          imagePath="/assets/the-power-of-when.png"
         />
       </div>
     </div>
@@ -25,6 +23,7 @@
 </template>
 
 <script lang="ts">
+import VocabularySetRepository from "@/repository/vocabulary.set";
 import { defineComponent } from "vue";
 import MainButton from "../components/MainButton/index.vue";
 import RecommendCard from "../components/RecommendCard/index.vue";
@@ -39,12 +38,22 @@ export default defineComponent({
   data() {
     return {
       name: "Aphirat",
+      vocabularySet: {},
+      vocabularySetRepository: new VocabularySetRepository(),
     };
   },
   methods: {
-    onClickRecommendCard() {
-      router.push("/vocab");
+    onClickRecommendCard(id: string) {
+      console.log("on click?");
+      router.push(`/vocab?id=${id}`);
     },
+    async getVocabularySet() {
+      this.vocabularySet =
+        await this.vocabularySetRepository.getAllVocabularySet();
+    },
+  },
+  mounted() {
+    this.getVocabularySet();
   },
 });
 </script>
