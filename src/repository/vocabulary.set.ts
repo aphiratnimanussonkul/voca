@@ -21,7 +21,11 @@ class VocabularySetRepository {
       id: id,
       cover: vocab?.cover ?? "",
       name: vocab?.name ?? "",
-      vocabularies: vocab?.vocabularies ?? [],
+      vocabularies: vocab?.vocabularies.map(
+        (v: { vocab: string; means: string }) => {
+          return { vocab: v.vocab, means: v.means };
+        }
+      ),
     };
   };
 }

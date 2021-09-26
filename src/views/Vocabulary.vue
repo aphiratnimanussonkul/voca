@@ -3,13 +3,18 @@
     <div>
       <ArrowLeftButton :onClick="onGetBack" />
       <h1 class="font-bold text-2xl my-2 text-primary-400">
-        The Phoenix Project
+        {{ this.vocabularySet.name }}
       </h1>
-      <p class="text-gray-400 text-xs">150 words</p>
+      <p class="text-gray-400 text-xs">
+        {{ this.vocabularySet.vocabularies.length }} words
+      </p>
       <div class="mt-4">
         <Carousel :items-to-show="1.25" :wrap-around="true">
-          <Slide v-for="vocab in vocabularies" :key="vocab">
-            <VocabularyCard :vocab="vocab.en" :means="vocab.th" />
+          <Slide
+            v-for="(item, index) in this.vocabularySet.vocabularies"
+            :key="index"
+          >
+            <VocabularyCard :vocab="item.vocab" :means="item.means" />
           </Slide>
 
           <template #addons="{ currentSlide }">
@@ -30,6 +35,7 @@
 
 <script lang="ts">
 import { Language } from "@/enum/language";
+import VocabularySetRepository from "@/repository/vocabulary.set";
 import TextToSpeechService from "@/services/speak";
 import { defineComponent } from "vue";
 import { Carousel, Navigation, Pagination, Slide } from "vue3-carousel";
@@ -57,28 +63,21 @@ export default defineComponent({
       onAutoPlay: false,
       currentSlide: 0,
       ttsService: new TextToSpeechService(),
-      vocabularies: [
-        { en: "Prudent", th: "รอบคอบ ประหยัด" },
-        { en: "Contempt", th: "การดูถูก การหมิ่นประมาท" },
-        { en: "Dodge", th: "การหลบ" },
-        { en: "Sincere", th: "จริงใจ" },
-        { en: "Coerce", th: "บีบบังคับ" },
-        { en: "Drone on", th: "พูดเสียงต่ำ" },
-        { en: "Grind", th: "บด" },
-        { en: "Halt", th: "การหยุดชั่วคราว" },
-        { en: "Grovel", th: "ประจบประแจง" },
-        { en: "Quite so", th: "นั่นแหละ" },
-        { en: "Amicable", th: "เป็นมิตร เป็นกันเอง" },
-        { en: "Tension", th: "ความตึง ความเครียด" },
-        { en: "Crawl", th: "การคลาน ยอมสยบ" },
-        { en: "In the meantime", th: "ในขณะเวลาเดียวกัน ในช่วงนั้น" },
-        { en: "Stretch", th: "ขยายออก" },
-        { en: "Alley", th: "ตรอก ซอย" },
-        { en: "Proactive", th: "อย่างมั่นใจ ซึ่งเข้าควบคุมสถานการณ์" },
-      ],
+      vocabularySetRepository: new VocabularySetRepository(),
+      vocabularySet: {
+        id: "",
+        name: "",
+        vocabularies: [{ vocab: "", means: "" }],
+        cover: "",
+      },
     };
   },
   methods: {
+    async getVocabulary() {
+      this.vocabularySet = await this.vocabularySetRepository.getById(
+        router.currentRoute.value.query.id as string
+      );
+    },
     onGetBack() {
       router.back();
     },
@@ -97,9 +96,10 @@ export default defineComponent({
       await new Promise((resole) => setTimeout(() => resole(""), 1));
     },
     async speakText() {
-      const { th, en } = this.vocabularies[this.currentSlide];
-      await this.ttsService.speak(en, Language.EN);
-      await this.ttsService.speak(th, Language.TH);
+      const { vocab, means } =
+        this.vocabularySet.vocabularies[this.currentSlide];
+      await this.ttsService.speak(vocab, Language.EN);
+      await this.ttsService.speak(means, Language.TH);
     },
     clickNextButton() {
       const nextButton = document.getElementsByClassName(
@@ -113,6 +113,7 @@ export default defineComponent({
   },
   mounted() {
     this.clickNextButton();
+    this.getVocabulary();
   },
 });
 </script>
